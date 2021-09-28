@@ -1,101 +1,70 @@
-/**
- * Concept of this lesson?
- * (a) Array,
- * (b) accessing it with an index
- * (c) length of the array
- */
+const chalk = require("chalk");
+var readlineSync = require("readline-sync");
+var score = 0;
+var userName = readlineSync.question(chalk.blue("what is your name?"));
+console.log(
+  chalk.magentaBright.bold(
+    "Hey",
+    chalk.yellow(userName),
+    "welcome to JavaScript Quiz ! "
+  )
+);
 
-const readline = require("readline");
-
-const rl = readline.createInterface({
-	input: process.stdin,
-	output: process.stdout
-});
-
-console.log("Welcome to Raj's Quiz on JavaScript");
-
-/**
- * list of something is an array
- */
-
-const queBank = [
-	{
-		question: `
+function play(question, answer) {
+  var userAnswer = readlineSync.question(chalk.cyan(question));
+  if (userAnswer.toUpperCase() === answer.toUpperCase()) {
+    console.log(chalk.green("Absolutely right!😇"));
+    score = score + 1;
+  } else {
+    console.log(chalk.red("Its not right!😢"));
+  }
+  console.log("current score", score);
+  console.log("________________________________");
+}
+const questions = [
+  {
+    question: `
 	Which type of JavaScript language is?
 	a: Object-Oriented
 	b: Object-Based
 	c: Assembly-language\n`,
-		answer: "b"
-	},
-	{
-		question: `
+    answer: "b",
+  },
+  {
+    question: `
 	The "function" and "var" are known as: ?
 	a: Keywords
 	b: Declaration statements\n`,
-		answer: "b"
-	},
-	{
-		question: `
+    answer: "b",
+  },
+  {
+    question: `
 	Which one of the following is the correct way for calling the javascript code?
 	a: Function/Method
 	b: Triggering Event
 	c: RMI
 	d: Preprocessor\n`,
-		answer: "a"
-	},
-	{
-		question: `
+    answer: "a",
+  },
+  {
+    question: `
 	In the JavaScript, which one of the following is not considered as an error?
 	a: Syntax error
 	b: Division by zero
 	c: Missing of Bracket\n`,
-		answer: "b"
-	}
+    answer: "b",
+  },
+  {
+    question: `
+	Inside which HTML element do we put the JavaScript?
+	a: <javascript>
+	b: <js>
+	c: <script>\n`,
+    answer: "c",
+  },
 ];
-
-let questionIndex = 0;
-
-function question() {
-	rl.question(queBank[questionIndex].question, (answer) => {
-		console.log(`You answered: ${answer}`);
-
-		if (answer.toLowerCase() == queBank[questionIndex].answer.toLowerCase()) {
-			console.log("right answer");
-			questionIndex++;
-			serve();
-		} else {
-			console.log("wrong answer");
-			console.log("try again");
-			question();
-		}
-	});
+for (i = 0; i < questions.length; i++) {
+  var currentQuestion = questions[i];
+  play(currentQuestion.question, currentQuestion.answer);
 }
-
-function serve() {
-	if (isQuestionBankExhausted()) {
-		console.log("thanks for playing....");
-		rl.close();
-	} else {
-		rl.question("what do you want to do? \n Press e to exit, any other key to continue....  ", (choice) => {
-			console.log(`You selected ${choice}`);
-
-			if (choice.toLowerCase() !== "e") {
-				question();
-			} else {
-				console.log("thanks for playing....");
-				rl.close();
-			}
-		});
-	}
-}
-
-/**
- * checks array length with index and exits game
- */
-function isQuestionBankExhausted() {
-	if (queBank.length == questionIndex) {
-		return true;
-	}
-}
-
-serve();
+console.log(chalk.yellow("YAY,your score is", score));
