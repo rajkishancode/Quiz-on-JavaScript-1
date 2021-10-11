@@ -67,4 +67,4 @@ for (i = 0; i < questions.length; i++) {
   var currentQuestion = questions[i];
   play(currentQuestion.question, currentQuestion.answer);
 }
-console.log(chalk.yellow("YAY,your score is", score));
+console.log(chalk.yellow("YAY!!,your score is", score));
